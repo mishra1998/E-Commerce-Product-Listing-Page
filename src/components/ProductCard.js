@@ -1,28 +1,39 @@
+import { addToCart,removeFromCart } from '@/store/actions';
 import Link from 'next/link';
-import { useState } from 'react';
+// import { useState } from 'react';
+import { useDispatch } from "react-redux";
 
-export default function ProductCard({ product,totalCartValues }) {
+export default function ProductCard({ product }) {
 
-  const [count,setCount]=useState(0);
-  const [totalPrice, setTotalPrice]=useState(0);
+  // const [count,setCount]=useState(0);
+  // const [totalPrice, setTotalPrice]=useState(0);
 
-  const addTocart=(price)=>{
-    const newCount = count + 1
-    const newTotal = totalPrice+price
-    setCount(newCount);
-    setTotalPrice(newTotal)
-    totalCartValues(1,price)
-  }
+  const dispatch =useDispatch();
 
-  const removeToCart=(price)=>{
-    if (count > 0) {
-      const newCount = count - 1
-      const newTotal = totalPrice-price
-      setCount(newCount);
-      setTotalPrice(newTotal)
-      totalCartValues(-1,-price)
-    }
-  }
+  // const addTocart=(price)=>{
+
+    // directly without redux
+
+    // const newCount = count + 1
+    // const newTotal = totalPrice+price
+    // setCount(newCount);
+    // setTotalPrice(newTotal)
+    // totalCartValues(1,price)
+
+    // directly use if don't want to make action file sepratly 
+    // dispatch(type="REMOVE_TO_CART", payload={price})
+  // }
+
+  // const removeToCart=(price)=>{
+    // if (count > 0) {
+    //   const newCount = count - 1
+    //   const newTotal = totalPrice-price
+    //   setCount(newCount);
+    //   setTotalPrice(newTotal)
+    //   totalCartValues(-1,-price)
+    // }
+    // dispatch({ type: "ADD_TO_CART", payload: { price } }); 
+  // }
 
   return (
     <div className="product-card">
@@ -31,8 +42,8 @@ export default function ProductCard({ product,totalCartValues }) {
       </Link>
       <h3>{product.title}</h3>
       <p>₹{product.price}</p>
-      <button onClick={()=>addTocart(product.price)}>Add to Cart</button>
-      <button onClick={()=>removeToCart(product.price)}>Remove</button>
+      <button onClick={()=> dispatch(addToCart(product.price))}>Add to Cart</button>
+      <button onClick={()=>dispatch(removeFromCart(product.price))}>Remove</button>
     </div>
   );
 }
