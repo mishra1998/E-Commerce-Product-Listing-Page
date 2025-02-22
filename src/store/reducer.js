@@ -1,29 +1,34 @@
 import { ADD_TO_CART, REMOVE_FROM_CART } from "./actions";
 
 const initialState = {
-    countItem: 0,
-    totalItemPrice: 0,
+    cartItems: [],
 };
 
 const cartReducer = (state = initialState, action) => {
-    const { payload: { price } = {} } = action;
-
     switch (action.type) {
-        case ADD_TO_CART:
+        case ADD_TO_CART: {
+            const existingProduct = state.cartItems.find((item) => item.id === action.payload.id);
+
             return {
                 ...state,
-                countItem: state.countItem + 1,
-                totalItemPrice: state.totalItemPrice + price
-            }
-        case REMOVE_FROM_CART:
+                cartItems: existingProduct
+                    ? state.cartItems.map((item) =>
+                        item.id === action.payload.id ? { ...item, quantity: item.quantity + 1 } : item
+                    )
+                    : [...state.cartItems, { ...action.payload, quantity: 1 }],
+            };
+        }
+        case REMOVE_FROM_CART: {
             return {
                 ...state,
-                countItem: state.countItem > 0 ? state.countItem - 1 : 0,
-                totalItemPrice: state.totalItemPrice > 0 ? state.totalItemPrice - price : 0
-            }
+                cartItems: state.cartItems
+                    .map((item) => (item.id === action.payload ? { ...item, quantity: item.quantity - 1 } : item))
+                    .filter((item) => item.quantity > 0),
+            };
+        }
         default:
             return state;
     }
-}
+};
 
 export default cartReducer;

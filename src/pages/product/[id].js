@@ -9,11 +9,16 @@ export async function getServerSideProps(context) {
 
 export default function ProductDetail({ product }) {
   return (
-    <div className="product-detail">
-      <img src={product.image} alt={product.title} />
-      <h2>{product.title}</h2>
-      <p>{product.description}</p>
-      <p>₹{product.price}</p>
+    <div className="product-detail-container">
+      <div className="product-image">
+        <img src={product.image} alt={product.title} />
+      </div>
+      <div className="product-info">
+        <h2>{product.title}</h2>
+        <p className="description">{product.description}</p>
+        <p className="price">₹{product.price}</p>
+        <button className="buy-btn">Buy Now</button>
+      </div>
     </div>
   );
 }
