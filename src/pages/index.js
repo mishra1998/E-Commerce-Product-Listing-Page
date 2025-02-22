@@ -1,13 +1,11 @@
 import { useState } from 'react';
 import { fetchProducts } from '@/utils/api';
 import ProductCard from '../components/ProductCard';
-
 import { useSelector } from 'react-redux';
 
 export async function getServerSideProps() {
   try {
     const products = await fetchProducts();
-    console.log('API Response:', products);
     
     return { props: { products } };
   } catch (error) {
@@ -53,14 +51,12 @@ export default function Home({ products }) {
           <option value="desc">High to Low</option>
         </select>
       </div>
-
       <div className="main-content">
         <div className="grid">
           {filteredProducts.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
         </div>
-
         <div className="cart-section">
           <h2>
             <i className="fa fa-shopping-cart"></i> Your Cart
@@ -70,6 +66,5 @@ export default function Home({ products }) {
         </div>
       </div>
     </div>
-
   );
 }
