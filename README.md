@@ -16,7 +16,10 @@ Styled using SCSS.
 Next.js SSR (getServerSideProps) for better SEO & performance.
 
 Installation & Setup
-git clone https://github.com/yourusername/ecom-store.git
+git clone 
+
+https://github.com/mishra1998/E-Commerce-Product-Listing-Page
+
 cd ecom-store
 
 Install Dependencies
